@@ -88,6 +88,7 @@ blockquote.callout > p:last-child { margin-bottom: 0; }
 /* 넓은 화면에서는 본문 옆에 세워 두고 따라오게 한다. 좁아지면 접히는 상자가
    되어 본문 위로 올라간다 — 한 칸으로 접히면 DOM 순서상 본문 뒤로 가기 때문이다. */
 .with-toc {
+  max-width: var(--wrap-wide, 72rem);
   display: grid;
   grid-template-columns: minmax(0, 1fr) 15rem;
   gap: 2.5rem;
