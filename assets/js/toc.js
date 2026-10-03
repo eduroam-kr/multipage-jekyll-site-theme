@@ -13,12 +13,19 @@
   // 접힘은 CSS 로 다루기 어렵다. details 의 open 을 직접 관리한다.
   // 좁은 화면에서는 접어 두고(본문이 한 화면 넘게 밀리지 않게), 넓어지면 편다.
   // 인쇄 직전에는 무조건 펴서 종이에 목차가 나오게 한다.
+  //
+  // 인쇄 중에는 손대지 않는다. 브라우저가 용지 너비로 다시 재면 matchMedia 가
+  // "좁은 화면" 으로 바뀌는데, 그때 접어 버리면 종이에 목차가 빈 쪽으로 나온다.
   var mq = window.matchMedia('(min-width: 992px)');
-  function fit() { if (mq.matches) host.setAttribute('open', ''); else host.removeAttribute('open'); }
+  var printing = false;
+  function fit() {
+    if (printing) return;
+    if (mq.matches) host.setAttribute('open', ''); else host.removeAttribute('open');
+  }
   fit();
   if (mq.addEventListener) mq.addEventListener('change', fit);
-  window.addEventListener('beforeprint', function () { host.setAttribute('open', ''); });
-  window.addEventListener('afterprint', fit);
+  window.addEventListener('beforeprint', function () { printing = true; host.setAttribute('open', ''); });
+  window.addEventListener('afterprint', function () { printing = false; fit(); });
 
   var ol = document.createElement('ol');
   var items = [];
