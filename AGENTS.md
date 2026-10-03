@@ -20,7 +20,7 @@
 | 사이트 이름·브랜드 | 사이트 `_config.yml` 의 `title`, `brand`, `brand_en` |
 | 국·영문 두 벌 여부 | 사이트 `_config.yml` 의 `bilingual` |
 | 쪽마다 다른 head·script | 사이트가 `_includes/head-extra.html`, `_includes/body-end.html` 를 두어 덮어쓴다 |
-| 사이트 고유 스타일 | 사이트 `assets/css/site.css` (테마 css 뒤에 실린다) |
+| 사이트 고유 스타일 | 사이트 `assets/css/site.css` (테마 css 뒤에 실린다). **사이트마다 반드시 둔다** — 테마는 이 파일을 들고 있지 않다 |
 | 틀 너비 | 사이트 `_config.yml` 의 `wrap`, `wrap_wide` (기본 56rem / 72rem) |
 
 테마에 `if site.title == ...` 같은 분기를 넣지 않는다. 분기가 필요하면 설정 항목을 하나 만든다.

@@ -1,4 +1,4 @@
-{%- assign en = include.en -%}
+{%- assign en = false -%}{%- if page.lang == 'en' -%}{%- assign en = true -%}{%- endif -%}
 <footer class="border-top mt-5">
   <div class="container {% if page.toc %}wrap-wide{% else %}wrap{% endif %} py-4 small text-body-secondary">
     {%- if en %}
