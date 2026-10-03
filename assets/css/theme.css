@@ -175,7 +175,6 @@ blockquote.callout > p:last-child { margin-bottom: 0; }
   #toc > summary { display: none; }
 
   .with-toc { display: block; max-width: none; }
-  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: .85em; word-break: break-all; }
   h2, h3 { break-after: avoid; }
   table, pre, blockquote { break-inside: avoid; }
 }

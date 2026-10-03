@@ -21,7 +21,23 @@
         {%- for m in site.data.nav %}
         {%- assign label = m.title -%}
         {%- if en and m.title_en -%}{%- assign label = m.title_en -%}{%- endif -%}
+        {%- if m.children %}
+        {%- comment -%} 하위 항목이 있으면 드롭다운. 구역 첫 화면은 목록 맨 위에 둔다. {%- endcomment -%}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="{{ p | append: m.url | relative_url }}" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid {{ m.icon }} fa-fw" aria-hidden="true"></i> {{ label }}</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{{ p | append: m.url | relative_url }}">{{ label }}{% if en %} home{% else %} 전체{% endif %}</a></li>
+            <li><hr class="dropdown-divider"></li>
+            {%- for s in m.children %}
+            {%- assign slabel = s.title -%}
+            {%- if en and s.title_en -%}{%- assign slabel = s.title_en -%}{%- endif -%}
+            <li><a class="dropdown-item" href="{{ p | append: s.url | relative_url }}">{{ slabel }}</a></li>
+            {%- endfor %}
+          </ul>
+        </li>
+        {%- else %}
         <li class="nav-item"><a class="nav-link" href="{% if m.external %}{{ m.url }}{% else %}{{ p | append: m.url | relative_url }}{% endif %}"{% if m.external %} rel="noopener"{% endif %}><i class="fa-solid {{ m.icon }} fa-fw" aria-hidden="true"></i> {{ label }}</a></li>
+        {%- endif %}
         {%- endfor %}
         {%- if site.bilingual %}
         <li class="nav-item ms-lg-2">

@@ -16,7 +16,7 @@
 
 | 무엇 | 어디서 |
 |---|---|
-| 메뉴 항목 | 사이트 `_data/nav.yml` |
+| 메뉴 항목 | 사이트 `_data/nav.yml` — 항목에 `children` 을 두면 드롭다운이 된다 |
 | 사이트 이름·브랜드 | 사이트 `_config.yml` 의 `title`, `brand`, `brand_en` |
 | 국·영문 두 벌 여부 | 사이트 `_config.yml` 의 `bilingual` |
 | 쪽마다 다른 head·script | 사이트가 `_includes/head-extra.html`, `_includes/body-end.html` 를 두어 덮어쓴다 |
