@@ -10,6 +10,9 @@
 
 .wrap { max-width: 56rem; }
 
+/* 목차가 붙는 쪽은 넓어진다. 머리글·바닥글도 같은 너비를 써야 오른쪽 끝이 맞는다. */
+.wrap-wide { max-width: 72rem; }
+
 /* 제목 크기는 여기서만 정한다. Bootstrap 기본값(2.5 / 2 / 1.75rem)은 글이 많은
    안내 쪽에 쓰기엔 커서, 한 단계씩 줄여 h1 > h2 > h3 가 눈에 바로 보이게 한다.
    본문에서는 <h1>, <h2>, <h3> 를 그대로 쓴다 — 크기 때문에 다른 태그를 쓰지 않는다. */
@@ -88,9 +91,9 @@ blockquote.callout > p:last-child { margin-bottom: 0; }
   grid-template-columns: minmax(0, 1fr) 15rem;
   gap: 2.5rem;
   align-items: start;
-  max-width: 72rem;
 }
 .with-toc > main, .with-toc > .doc-main { min-width: 0; }
+.doc-main { max-width: 56rem; }
 
 #toc {
   position: sticky;

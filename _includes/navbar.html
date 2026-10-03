@@ -6,7 +6,7 @@
 {%- assign en = false -%}{%- if page.lang == 'en' -%}{%- assign en = true -%}{%- endif -%}
 {%- assign p = '' -%}{%- if en -%}{%- assign p = '/en' -%}{%- endif -%}
 <nav class="navbar navbar-expand-lg sticky-top bg-body-tertiary border-bottom">
-  <div class="container wrap">
+  <div class="container {% if page.toc %}wrap-wide{% else %}wrap{% endif %}">
     <a class="navbar-brand d-flex align-items-center gap-2 py-1" href="{{ p | append: '/' | relative_url }}">
       <img src="{{ '/assets/eduroam-logo.svg' | relative_url }}" alt="eduroam" width="90" height="35" class="brand-logo brand-logo-light">
       <img src="{{ '/assets/eduroam-logo-white.svg' | relative_url }}" alt="eduroam" width="90" height="35" class="brand-logo brand-logo-dark">
