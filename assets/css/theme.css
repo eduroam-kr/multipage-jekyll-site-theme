@@ -102,10 +102,7 @@ blockquote.callout > p:last-child { margin-bottom: 0; }
   border-left: 1px solid var(--bs-border-color);
   padding-left: 1rem;
 }
-/* 넓은 화면에서는 접기 단추를 감추고, details 가 닫혀 있어도 내용을 보여 준다.
-   좁은 화면에서 기본으로 접혀 있으려면 open 을 달지 않아야 하기 때문이다. */
 #toc > summary { display: none; }
-#toc > div { display: block; }
 #toc .toc-title {
   font-weight: 700;
   font-size: .75rem;
@@ -171,7 +168,6 @@ blockquote.callout > p:last-child { margin-bottom: 0; }
     break-after: page;
   }
   #toc > summary { display: none; }
-  #toc > div { display: block !important; }
 
   .with-toc { display: block; max-width: none; }
   a[href^="http"]::after { content: " (" attr(href) ")"; font-size: .85em; word-break: break-all; }

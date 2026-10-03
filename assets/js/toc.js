@@ -10,6 +10,16 @@
   var hs = body.querySelectorAll('h2, h3');
   if (hs.length < 3) { host.remove(); return; }
 
+  // 접힘은 CSS 로 다루기 어렵다. details 의 open 을 직접 관리한다.
+  // 좁은 화면에서는 접어 두고(본문이 한 화면 넘게 밀리지 않게), 넓어지면 편다.
+  // 인쇄 직전에는 무조건 펴서 종이에 목차가 나오게 한다.
+  var mq = window.matchMedia('(min-width: 992px)');
+  function fit() { if (mq.matches) host.setAttribute('open', ''); else host.removeAttribute('open'); }
+  fit();
+  if (mq.addEventListener) mq.addEventListener('change', fit);
+  window.addEventListener('beforeprint', function () { host.setAttribute('open', ''); });
+  window.addEventListener('afterprint', fit);
+
   var ol = document.createElement('ol');
   var items = [];
   Array.prototype.forEach.call(hs, function (h) {
