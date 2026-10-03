@@ -8,10 +8,11 @@
    색을 뒤집는다. 다크는 Bootstrap 이 color-scheme: dark 를 넣는다. */
 [data-bs-theme="light"] { color-scheme: light; }
 
-.wrap { max-width: 56rem; }
+/* 틀 너비. 사이트가 _config.yml 의 wrap / wrap_wide 로 바꾼다. */
+.wrap { max-width: var(--wrap, 56rem); }
 
 /* 목차가 붙는 쪽은 넓어진다. 머리글·바닥글도 같은 너비를 써야 오른쪽 끝이 맞는다. */
-.wrap-wide { max-width: 72rem; }
+.wrap-wide { max-width: var(--wrap-wide, 72rem); }
 
 /* 제목 크기는 여기서만 정한다. Bootstrap 기본값(2.5 / 2 / 1.75rem)은 글이 많은
    안내 쪽에 쓰기엔 커서, 한 단계씩 줄여 h1 > h2 > h3 가 눈에 바로 보이게 한다.

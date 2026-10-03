@@ -69,6 +69,11 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+{%- comment -%}
+  사이트 너비. 틀(머리글·바닥글·본문 상자)의 최대 폭이다. 글줄 길이는 여기와
+  별개로 테마가 잡는다 — 틀을 넓혀도 글이 지나치게 길어지지 않는다.
+{%- endcomment -%}
+<style>:root{--wrap:{{ site.wrap | default: '56rem' }};--wrap-wide:{{ site.wrap_wide | default: '72rem' }}}</style>
 <link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
 {%- include head-extra.html %}
