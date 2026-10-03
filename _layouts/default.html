@@ -1,0 +1,114 @@
+<!doctype html>
+{%- assign en = false -%}{%- if page.lang == 'en' -%}{%- assign en = true -%}{%- endif -%}
+<html lang="{{ page.lang | default: 'ko' }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+{%- comment -%}
+  제목 — 쪽 이름이 있으면 "<쪽 이름> · <사이트 이름>". 공지처럼 title 대신
+  title_ko/title_en 을 쓰는 글도 받는다.
+{%- endcomment -%}
+{%- assign page_title = page.title_ko -%}
+{%- if en and page.title_en -%}{%- assign page_title = page.title_en -%}{%- endif -%}
+{%- unless page_title -%}{%- assign page_title = page.title -%}{%- endunless -%}
+{%- comment -%} 설명 — 쪽에 없으면 본문 앞부분, 그것도 없으면 사이트 설명 {%- endcomment -%}
+{%- assign desc = page.description -%}
+{%- unless desc -%}
+  {%- assign desc = page.content | strip_html | normalize_whitespace | truncate: 160 -%}
+  {%- if desc == '' -%}
+    {%- if en and site.description_en -%}{%- assign desc = site.description_en -%}
+    {%- else -%}{%- assign desc = site.description -%}{%- endif -%}
+  {%- endif -%}
+{%- endunless -%}
+{%- comment -%} 공유 카드 그림 — 영문 쪽이 따로 있으면 그것을 쓴다 {%- endcomment -%}
+{%- assign og_image = '/assets/og-image.png' -%}
+{%- if en and site.bilingual -%}{%- assign og_image = '/assets/og-image-en.png' -%}{%- endif -%}
+<title>{% if page_title %}{{ page_title }} · {% endif %}{{ site.title }}</title>
+<meta name="description" content="{{ desc }}">
+<link rel="canonical" href="{{ page.url | absolute_url }}">
+{%- if site.bilingual %}
+{%- assign alt = page.lang_alt -%}
+{%- unless alt -%}
+  {%- if en -%}{%- assign alt = page.url | remove_first: '/en' -%}
+  {%- else -%}{%- assign alt = page.url | prepend: '/en' -%}{%- endif -%}
+{%- endunless -%}
+{%- if en -%}{%- assign ko_url = alt -%}{%- assign en_url = page.url -%}
+{%- else -%}{%- assign ko_url = page.url -%}{%- assign en_url = alt -%}{%- endif -%}
+<link rel="alternate" hreflang="ko" href="{{ ko_url | absolute_url }}">
+<link rel="alternate" hreflang="en" href="{{ en_url | absolute_url }}">
+<link rel="alternate" hreflang="x-default" href="{{ ko_url | absolute_url }}">
+{%- endif %}
+
+<meta property="og:type" content="{% if page.date %}article{% else %}website{% endif %}">
+<meta property="og:title" content="{{ page_title | default: site.title }}">
+<meta property="og:description" content="{{ desc }}">
+<meta property="og:url" content="{{ page.url | absolute_url }}">
+<meta property="og:site_name" content="{{ site.title }}">
+<meta property="og:locale" content="{% if en %}en_US{% else %}ko_KR{% endif %}">
+{%- if site.bilingual %}
+<meta property="og:locale:alternate" content="{% if en %}ko_KR{% else %}en_US{% endif %}">
+{%- endif %}
+<meta property="og:image" content="{{ og_image | absolute_url }}">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="eduroam">
+{%- if page.date %}
+<meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}">
+{%- endif %}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ page_title | default: site.title }}">
+<meta name="twitter:description" content="{{ desc }}">
+<meta name="twitter:image" content="{{ og_image | absolute_url }}">
+
+<link rel="icon" href="{{ '/assets/icons/favicon.ico' | relative_url }}" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/icons/favicon-32x32.png' | relative_url }}">
+<link rel="apple-touch-icon" sizes="180x180" href="{{ '/assets/icons/apple-icon-180x180.png' | relative_url }}">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}">
+<link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
+{%- include head-extra.html %}
+<script>
+  // 화면이 그려지기 전에 테마를 정한다. 나중에 바꾸면 흰 화면이 한 번 번쩍인다.
+  // 시스템을 고른 상태면 OS 설정을 읽는다 — Bootstrap 은 이걸 알아서 하지 않는다.
+  (function () {
+    var t = 'auto';
+    try { t = localStorage.getItem('theme') || 'auto'; } catch (e) {}
+    if (t !== 'light' && t !== 'dark') {
+      t = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    document.documentElement.dataset.bsTheme = t;
+  })();
+</script>
+</head>
+{%- comment -%}
+  인쇄와 목차는 front matter 가 정한다.
+    toc: true          오른쪽 목차 (좁은 화면에서는 접힘)
+    print: clean       인쇄에서 머리글·바닥글을 뺀다 (기본 full)
+    print_toc: false   인쇄에서 목차를 뺀다 (기본, toc 가 있으면 나온다)
+{%- endcomment -%}
+<body class="d-flex flex-column min-vh-100"
+      data-print="{{ page.print | default: 'full' }}"
+      data-print-toc="{% if page.print_toc == false %}false{% else %}true{% endif %}">
+
+{% include navbar.html %}
+
+<main class="flex-grow-1">
+  {{ content }}
+</main>
+
+{% include footer.html %}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ '/assets/js/theme.js' | relative_url }}"></script>
+{%- if page.toc %}
+<script src="{{ '/assets/js/toc.js' | relative_url }}"></script>
+{%- endif %}
+<script src="{{ '/assets/js/callout.js' | relative_url }}"></script>
+{%- include body-end.html %}
+</body>
+</html>

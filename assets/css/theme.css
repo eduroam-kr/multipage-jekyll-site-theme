@@ -1,0 +1,177 @@
+/* eduroam Korea 공통 테마
+ *
+ * Bootstrap 5.3 기본 팔레트를 그대로 쓴다. 색 값을 직접 정하지 않는다 —
+ * 다크 모드는 Bootstrap 의 [data-bs-theme=dark] 가 알아서 바꾼다.
+ * 예외는 두 곳뿐이고 그 자리에 이유를 적었다. */
+
+/* 이 사이트가 두 테마를 다 다룬다고 알린다. 안 알리면 브라우저가 제 방식으로
+   색을 뒤집는다. 다크는 Bootstrap 이 color-scheme: dark 를 넣는다. */
+[data-bs-theme="light"] { color-scheme: light; }
+
+.wrap { max-width: 56rem; }
+
+/* 제목 크기는 여기서만 정한다. Bootstrap 기본값(2.5 / 2 / 1.75rem)은 글이 많은
+   안내 쪽에 쓰기엔 커서, 한 단계씩 줄여 h1 > h2 > h3 가 눈에 바로 보이게 한다.
+   본문에서는 <h1>, <h2>, <h3> 를 그대로 쓴다 — 크기 때문에 다른 태그를 쓰지 않는다. */
+h1 { font-size: 1.9rem; }
+h2 { font-size: 1.5rem; margin-top: 3rem; }
+h3 { font-size: 1.2rem; margin-top: 2rem; }
+h2 + h3 { margin-top: 1.25rem; }
+
+/* 밑줄은 본문 흐름을 끊는 장 제목에만. 카드 안에 들어간 제목에는 긋지 않는다. */
+.wrap > h2, .doc-body > h2 { padding-bottom: .4rem; border-bottom: 1px solid var(--bs-border-color); }
+
+/* ── 머리글 ─────────────────────────────────────────────── */
+
+.brand-logo { height: 1.7rem; width: auto; }
+
+/* eduroam 워드마크는 거의 검정이라 다크 모드에서 배경에 묻힌다. 필터로 뒤집으면
+   글자는 보이지만 상표 색까지 같이 뒤집힌다. 흰 로고 파일을 바꿔 끼운다. */
+.brand-logo-dark { display: none; }
+[data-bs-theme="dark"] .brand-logo-light { display: none; }
+[data-bs-theme="dark"] .brand-logo-dark { display: inline-block; }
+
+.navbar-nav .nav-link { white-space: nowrap; }
+
+/* ── 문서 본문 ───────────────────────────────────────────── */
+
+.doc-body table { width: 100%; margin: 1rem 0; }
+.doc-body table th, .doc-body table td {
+  padding: .5rem .6rem;
+  border-bottom: 1px solid var(--bs-border-color);
+  vertical-align: top;
+}
+.doc-body table th { text-align: left; white-space: nowrap; }
+.doc-body pre {
+  padding: .9rem 1rem;
+  background: var(--bs-tertiary-bg);
+  border: 1px solid var(--bs-border-color);
+  border-radius: var(--bs-border-radius);
+  overflow-x: auto;
+}
+.doc-body pre code { white-space: pre-wrap; word-break: break-all; font-size: .8125rem; }
+.doc-body li { margin-bottom: .25rem; }
+
+@media (max-width: 575.98px) {
+  .doc-body table { display: block; overflow-x: auto; }
+  h2 { margin-top: 2.25rem; }
+}
+
+/* ── 색 상자 ─────────────────────────────────────────────── */
+
+blockquote.callout {
+  margin: 0 0 1.1rem;
+  padding: .75rem 1rem;
+  border-left: 3px solid var(--bs-border-color);
+  border-radius: 0 var(--bs-border-radius) var(--bs-border-radius) 0;
+  background: var(--bs-tertiary-bg);
+}
+blockquote.callout > p:last-child { margin-bottom: 0; }
+.callout-label { display: block; font-weight: 700; font-size: .8125rem; margin-bottom: .35rem; }
+.callout-note     { border-left-color: var(--bs-primary); }
+.callout-note .callout-label { color: var(--bs-primary); }
+.callout-tip      { border-left-color: var(--bs-success); }
+.callout-tip .callout-label { color: var(--bs-success); }
+.callout-important{ border-left-color: var(--bs-info); }
+.callout-important .callout-label { color: var(--bs-info); }
+.callout-warning  { border-left-color: var(--bs-warning); }
+.callout-warning .callout-label { color: var(--bs-warning-text-emphasis); }
+.callout-caution  { border-left-color: var(--bs-danger); }
+.callout-caution .callout-label { color: var(--bs-danger); }
+
+/* ── 목차 ───────────────────────────────────────────────── */
+
+/* 넓은 화면에서는 본문 옆에 세워 두고 따라오게 한다. 좁아지면 접히는 상자가
+   되어 본문 위로 올라간다 — 한 칸으로 접히면 DOM 순서상 본문 뒤로 가기 때문이다. */
+.with-toc {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 15rem;
+  gap: 2.5rem;
+  align-items: start;
+  max-width: 72rem;
+}
+.with-toc > main, .with-toc > .doc-main { min-width: 0; }
+
+#toc {
+  position: sticky;
+  top: 5rem;
+  max-height: calc(100vh - 7rem);
+  overflow-y: auto;
+  font-size: .875rem;
+  line-height: 1.5;
+  border-left: 1px solid var(--bs-border-color);
+  padding-left: 1rem;
+}
+#toc > summary { display: none; }
+#toc .toc-title {
+  font-weight: 700;
+  font-size: .75rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--bs-secondary-color);
+  margin-bottom: .6rem;
+}
+#toc ol { list-style: none; margin: 0; padding: 0; }
+#toc li { margin: 0 0 .2rem; }
+#toc li.lv3 { padding-left: .8rem; font-size: .8125rem; }
+#toc a { display: block; padding: .1rem 0; color: var(--bs-secondary-color); text-decoration: none; }
+#toc a:hover { color: var(--bs-link-color); }
+#toc a.on { color: var(--bs-link-color); font-weight: 600; }
+
+@media (max-width: 991.98px) {
+  /* 한 칸으로 접히면 DOM 순서상 목차가 본문 뒤로 간다. grid 를 유지한 채
+     한 칸으로 만들고 order 로 위에 올린다. */
+  .with-toc { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  #toc {
+    order: -1;
+    position: static;
+    max-height: none;
+    overflow: visible;
+    margin: 1rem 0 1.5rem;
+    padding: 0;
+    border: 1px solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    background: var(--bs-tertiary-bg);
+  }
+  #toc > summary {
+    display: block;
+    cursor: pointer;
+    padding: .65rem 1rem;
+    font-weight: 600;
+    font-size: .8125rem;
+    color: var(--bs-secondary-color);
+    list-style: none;
+  }
+  #toc > summary::-webkit-details-marker { display: none; }
+  #toc > summary::after { content: " ▾"; }
+  #toc[open] > summary::after { content: " ▴"; }
+  #toc > div { padding: 0 1rem .8rem; }
+  #toc .toc-title { display: none; }
+}
+
+/* ── 인쇄 ───────────────────────────────────────────────── */
+
+@media print {
+  /* print: clean 인 쪽만 머리글·바닥글을 뺀다. 공식 웹사이트처럼 고지문이
+     종이에도 남아야 하는 곳은 기본값(full)으로 둔다. */
+  [data-print="clean"] .navbar,
+  [data-print="clean"] footer { display: none !important; }
+
+  /* 목차는 인쇄에도 나온다. 빼려면 쪽에 print_toc: false 를 적는다. */
+  [data-print-toc="false"] #toc { display: none !important; }
+  #toc {
+    position: static;
+    max-height: none;
+    overflow: visible;
+    border-left: 0;
+    padding-left: 0;
+    break-after: page;
+  }
+  #toc > summary { display: none; }
+  #toc > div { display: block !important; }
+
+  .with-toc { display: block; max-width: none; }
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: .85em; word-break: break-all; }
+  h2, h3 { break-after: avoid; }
+  table, pre, blockquote { break-inside: avoid; }
+}
