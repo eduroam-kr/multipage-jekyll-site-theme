@@ -16,12 +16,18 @@
   //
   // 인쇄 중에는 손대지 않는다. 브라우저가 용지 너비로 다시 재면 matchMedia 가
   // "좁은 화면" 으로 바뀌는데, 그때 접어 버리면 종이에 목차가 빈 쪽으로 나온다.
+  //
+  // 사람이 직접 여닫은 뒤에는 자동으로 손대지 않는다. 넓은 화면에서 접어 둔
+  // 목차가 창 크기를 조금 바꿨다고 다시 펴지면 성가시다.
   var mq = window.matchMedia('(min-width: 992px)');
   var printing = false;
+  var touched = false;
   function fit() {
-    if (printing) return;
+    if (printing || touched) return;
     if (mq.matches) host.setAttribute('open', ''); else host.removeAttribute('open');
   }
+  var sum = host.querySelector('summary');
+  if (sum) sum.addEventListener('click', function () { touched = true; });
   fit();
   if (mq.addEventListener) mq.addEventListener('change', fit);
   window.addEventListener('beforeprint', function () { printing = true; host.setAttribute('open', ''); });
