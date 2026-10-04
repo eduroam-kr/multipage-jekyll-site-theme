@@ -16,8 +16,12 @@ img { max-width: 100%; }
 /* 틀 너비. 사이트가 _config.yml 의 wrap / wrap_wide 로 바꾼다. */
 .wrap { max-width: var(--wrap, 56rem); }
 
-/* 목차가 붙는 쪽은 넓어진다. 머리글·바닥글도 같은 너비를 써야 오른쪽 끝이 맞는다. */
+/* 본문 틀이 목차까지 안는 너비. */
 .wrap-wide { max-width: var(--wrap-wide, 72rem); }
+
+/* 머리글·바닥글 폭. 쪽마다 달라지면 메뉴와 고지문이 좌우로 움직인다.
+   사이트가 _config.yml 의 frame 으로 정하고, 안 정하면 wrap 을 따른다. */
+.frame { max-width: var(--frame, var(--wrap, 56rem)); }
 
 /* 제목 크기는 여기서만 정한다. Bootstrap 기본값(2.5 / 2 / 1.75rem)은 글이 많은
    안내 쪽에 쓰기엔 커서, 한 단계씩 줄여 h1 > h2 > h3 가 눈에 바로 보이게 한다.
