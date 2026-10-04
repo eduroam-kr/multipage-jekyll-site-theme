@@ -61,8 +61,40 @@ h2 + h3 { margin-top: 1.25rem; }
 .doc-body pre code { white-space: pre-wrap; word-break: break-all; font-size: .8125rem; }
 .doc-body li { margin-bottom: .25rem; }
 
+/* 좁은 화면에서는 표를 한 줄씩 쌓는다. 가로 스크롤은 열이 몇 개인지 보이지
+   않아 읽기 나쁘다. 열 이름은 table.js 가 data-label 로 넣어 둔다 — 스크립트가
+   없으면 쌓이지 않고 가로로 흐르니, 그때는 넘치는 만큼 밀어서 본다. */
+@media (max-width: 767.98px) {
+  .doc-body table:not([data-stack]) { display: block; overflow-x: auto; }
+
+  .doc-body table[data-stack] { display: block; }
+  .doc-body table[data-stack] thead { display: none; }
+  .doc-body table[data-stack] tbody,
+  .doc-body table[data-stack] tr { display: block; }
+  .doc-body table[data-stack] tr {
+    margin-bottom: .75rem;
+    padding: .5rem .75rem;
+    border: 1px solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+  }
+  .doc-body table[data-stack] td {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    gap: .6rem;
+    padding: .2rem 0;
+    border: 0;
+    text-align: left;
+  }
+  .doc-body table[data-stack] td::before {
+    content: attr(data-label);
+    color: var(--bs-secondary-color);
+    font-size: .8125rem;
+    line-height: 1.6;
+  }
+  .doc-body table[data-stack] td[data-blank] { display: none; }
+}
+
 @media (max-width: 575.98px) {
-  .doc-body table { display: block; overflow-x: auto; }
   h2 { margin-top: 2.25rem; }
 }
 
