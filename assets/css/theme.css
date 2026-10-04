@@ -8,6 +8,11 @@
    색을 뒤집는다. 다크는 Bootstrap 이 color-scheme: dark 를 넣는다. */
 [data-bs-theme="light"] { color-scheme: light; }
 
+/* 그림은 칸을 넘지 않는다. Bootstrap 은 .img-fluid 를 붙여야 이렇게 되는데,
+   마크다운으로 쓴 그림에는 클래스를 붙일 자리가 없다. 요소 선택자라
+   사이트 CSS 가 크기를 따로 정한 그림은 그쪽이 이긴다. */
+img { max-width: 100%; }
+
 /* 틀 너비. 사이트가 _config.yml 의 wrap / wrap_wide 로 바꾼다. */
 .wrap { max-width: var(--wrap, 56rem); }
 
