@@ -30,8 +30,16 @@
   if (sum) sum.addEventListener('click', function () { touched = true; });
   fit();
   if (mq.addEventListener) mq.addEventListener('change', fit);
-  window.addEventListener('beforeprint', function () { printing = true; host.setAttribute('open', ''); });
-  window.addEventListener('afterprint', function () { printing = false; fit(); });
+  var wasOpen = false;
+  window.addEventListener('beforeprint', function () {
+    printing = true;
+    wasOpen = host.hasAttribute('open');
+    host.setAttribute('open', '');
+  });
+  window.addEventListener('afterprint', function () {
+    printing = false;
+    if (touched) { if (!wasOpen) host.removeAttribute('open'); } else fit();
+  });
 
   var ol = document.createElement('ol');
   var items = [];
