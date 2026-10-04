@@ -73,7 +73,8 @@
   사이트 너비. 틀(머리글·바닥글·본문 상자)의 최대 폭이다. 글줄 길이는 여기와
   별개로 테마가 잡는다 — 틀을 넓혀도 글이 지나치게 길어지지 않는다.
 {%- endcomment -%}
-<style>:root{--wrap:{{ site.wrap | default: '56rem' }};--wrap-wide:{{ site.wrap_wide | default: '72rem' }}}</style>
+{%- comment %} --doc 는 글줄 폭이다. 목차가 있든 없든 본문은 늘 이 너비다. {%- endcomment %}
+<style>:root{--wrap:{{ site.wrap | default: '56rem' }};--wrap-wide:{{ site.wrap_wide | default: '72rem' }};--doc:{{ site.doc | default: '56rem' }}}</style>
 <link rel="stylesheet" href="{{ '/assets/css/theme.css' | relative_url }}">
 <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
 {%- include head-extra.html %}
