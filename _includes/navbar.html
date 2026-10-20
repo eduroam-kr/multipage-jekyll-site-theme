@@ -45,16 +45,30 @@
         {%- endif %}
         {%- endfor %}
         {%- if site.bilingual %}
-        <li class="nav-item ms-lg-2">
-          {%- assign alt = page.lang_alt -%}
-          {%- unless alt -%}
-            {%- if en -%}{%- assign alt = page.url | remove_first: '/en' -%}
-            {%- else -%}{%- assign alt = page.url | prepend: '/en' -%}{%- endif -%}
-          {%- endunless -%}
-          {%- comment -%} 메뉴가 많아 넓은 화면에서는 아이콘만 둔다. 이름은 좁은 화면과
-             보조기기에 남는다 (.lang-label 은 lg 이상에서만 눈에서 감춘다). {%- endcomment -%}
-          {%- assign lang_label = 'English' -%}{%- if en -%}{%- assign lang_label = '한국어' -%}{%- endif -%}
-          <a class="nav-link" href="{{ alt | relative_url }}" title="{{ lang_label }}"><i class="fa-solid fa-globe fa-fw" aria-hidden="true"></i> <span class="lang-label">{{ lang_label }}</span></a>
+        {%- comment -%}
+          언어는 드롭다운으로 편다. 한 줄짜리 전환 링크는 어떤 언어가 있는지, 지금
+          어느 쪽을 보고 있는지 알려 주지 못한다.
+
+          메뉴가 많아 넓은 화면에서는 여는 단추를 지구본만으로 둔다. 이름은 좁은
+          화면과 보조기기에 남는다 (.lang-label 은 lg 이상에서만 눈에서 감춘다).
+        {%- endcomment -%}
+        {%- assign alt = page.lang_alt -%}
+        {%- unless alt -%}
+          {%- if en -%}{%- assign alt = page.url | remove_first: '/en' -%}
+          {%- else -%}{%- assign alt = page.url | prepend: '/en' -%}{%- endif -%}
+        {%- endunless -%}
+        {%- if en -%}
+          {%- assign ko_url = alt -%}{%- assign en_url = page.url -%}
+        {%- else -%}
+          {%- assign ko_url = page.url -%}{%- assign en_url = alt -%}
+        {%- endif -%}
+        <li class="nav-item dropdown ms-lg-2">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+             aria-label="{% if en %}Language{% else %}언어{% endif %}"><i class="fa-solid fa-globe fa-fw" aria-hidden="true"></i> <span class="lang-label">{% if en %}Language{% else %}언어{% endif %}</span></a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item{% unless en %} active{% endunless %}" href="{{ ko_url | relative_url }}" lang="ko"{% unless en %} aria-current="true"{% endunless %}>🇰🇷 한국어</a></li>
+            <li><a class="dropdown-item{% if en %} active{% endif %}" href="{{ en_url | relative_url }}" lang="en"{% if en %} aria-current="true"{% endif %}>🇺🇸 English</a></li>
+          </ul>
         </li>
         {%- endif %}
         <li class="nav-item dropdown ms-lg-1">
